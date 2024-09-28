@@ -79,7 +79,9 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: userId
           booleanExpressionType: UuidBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: cartItems
+        - relationshipName: user
   logicalOperators:
     enable: true
   isNull:
@@ -164,4 +166,44 @@ definition:
     - role: admin
       select:
         filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartItems
+  sourceType: Carts
+  target:
+    model:
+      name: CartItems
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartItemsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: cartId
+  graphql:
+    aggregateFieldName: cartItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: user
+  sourceType: Carts
+  target:
+    model:
+      name: Users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
 

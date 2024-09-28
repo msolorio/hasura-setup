@@ -95,7 +95,9 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: userId
           booleanExpressionType: UuidBoolExp
-      comparableRelationships: []
+      comparableRelationships:
+        - relationshipName: product
+        - relationshipName: user
   logicalOperators:
     enable: true
   isNull:
@@ -190,4 +192,40 @@ definition:
     - role: admin
       select:
         filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: product
+  sourceType: Reviews
+  target:
+    model:
+      name: Products
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: user
+  sourceType: Reviews
+  target:
+    model:
+      name: Users
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
 
